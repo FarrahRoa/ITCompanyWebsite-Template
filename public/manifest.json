@@ -1,0 +1,16 @@
+{
+  "name": "Company Name",
+  "short_name": "Company Name",
+  "description": "Professional IT solutions template",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a1033",
+  "theme_color": "#1a1033",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
