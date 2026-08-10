@@ -152,24 +152,6 @@ export default function Hero() {
               <div className="absolute inset-2 rounded-2xl ring-1 ring-inset ring-white/10 pointer-events-none" />
             </div>
 
-            {/* floating glass cards */}
-            <FloatingCard className="-left-6 top-10 animate-float" delay={1}>
-              <div className="font-mono-label text-accent">{hero.stats[0].label}</div>
-              <div className="font-heading text-xl font-bold">{hero.stats[0].value}</div>
-            </FloatingCard>
-            <FloatingCard className="-right-4 bottom-12 animate-float-slow" delay={1.3}>
-              <div className="font-mono-label text-secondary">{hero.stats[1].label}</div>
-              <div className="font-heading text-xl font-bold">{hero.stats[1].value}</div>
-            </FloatingCard>
-            <FloatingCard className="left-1/2 -bottom-5 -translate-x-1/2 animate-float" delay={1.6}>
-              <div className="flex items-center gap-2">
-                <span className="relative flex h-2.5 w-2.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent" />
-                </span>
-                <span className="font-mono-label text-muted-foreground">{hero.status}</span>
-              </div>
-            </FloatingCard>
           </motion.div>
 
           {/* orbiting ring */}
@@ -200,15 +182,3 @@ function Trust({ label }) {
   );
 }
 
-function FloatingCard({ children, className = "", delay = 0 }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.7 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay, type: "spring", stiffness: 200, damping: 18 }}
-      className={`absolute glass rounded-xl px-4 py-2.5 shadow-lg shadow-primary/10 ${className}`}
-    >
-      {children}
-    </motion.div>
-  );
-}

@@ -1,101 +1,130 @@
-import { motion } from "framer-motion";
-
-// Refined network visual for the hero. Uses SVG with subtle animated nodes and lines,
-// soft background geometry, and a gentle glow. Keeps a minimal, premium look.
+﻿import { motion } from "framer-motion";
 
 const nodes = [
-  { x: 14, y: 20, r: 1.6 },
-  { x: 38, y: 12, r: 2.6, main: true },
-  { x: 66, y: 18, r: 1.8 },
-  { x: 22, y: 40, r: 1.4 },
-  { x: 48, y: 46, r: 3.0, main: true },
-  { x: 76, y: 52, r: 1.2 },
-  { x: 18, y: 68, r: 1.5 },
-  { x: 46, y: 78, r: 2.0 },
-  { x: 74, y: 74, r: 1.1 },
-  { x: 6, y: 50, r: 1.0 },
+  { id: "a", x: 16, y: 18, size: 16, main: true },
+  { id: "b", x: 42, y: 12, size: 10 },
+  { id: "c", x: 70, y: 20, size: 14, main: true },
+  { id: "d", x: 24, y: 40, size: 10 },
+  { id: "e", x: 52, y: 38, size: 18, main: true },
+  { id: "f", x: 80, y: 48, size: 10 },
+  { id: "g", x: 20, y: 70, size: 12 },
+  { id: "h", x: 48, y: 78, size: 14 },
+  { id: "i", x: 74, y: 72, size: 10 },
 ];
 
 const edges = [
-  [0, 1], [1, 2], [0, 3], [3, 4], [1, 4], [2, 4], [4, 5], [3, 6],
-  [6, 7], [4, 7], [7, 8], [5, 8], [3, 9], [9, 6], [2, 5],
+  ["a", "b"],
+  ["a", "d"],
+  ["b", "c"],
+  ["a", "e"],
+  ["d", "e"],
+  ["e", "f"],
+  ["d", "g"],
+  ["g", "h"],
+  ["e", "h"],
+  ["f", "i"],
+  ["h", "i"],
 ];
 
 export default function HeroVisual() {
   return (
-    <svg
-      viewBox="0 0 100 100"
-      preserveAspectRatio="xMidYMid slice"
-      className="w-full h-full"
-      role="img"
-      aria-label="Network visualization"
-    >
-      <defs>
-        <linearGradient id="hv-bg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.06" />
-          <stop offset="60%" stopColor="hsl(var(--secondary))" stopOpacity="0.04" />
-          <stop offset="100%" stopColor="hsl(var(--accent))" stopOpacity="0.02" />
-        </linearGradient>
-        <linearGradient id="hv-line" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.95" />
-          <stop offset="100%" stopColor="hsl(var(--secondary))" stopOpacity="0.95" />
-        </linearGradient>
-        <radialGradient id="hv-node" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="1" />
-          <stop offset="100%" stopColor="hsl(var(--secondary))" stopOpacity="0.9" />
-        </radialGradient>
-      </defs>
+    <div className="relative h-full w-full overflow-hidden rounded-[1.75rem] border border-white/60 bg-white/85 shadow-2xl shadow-primary/10 backdrop-blur-xl">
+      <div className="absolute inset-0 bg-gradient-to-br from-white via-slate-100 to-cyan-50/50" />
+      <div className="absolute left-6 top-8 h-28 w-28 rounded-[2rem] bg-cyan-200/40 blur-3xl" />
+      <div className="absolute right-8 top-16 h-20 w-20 rounded-[2rem] border border-white/70 bg-white/60 blur-3xl" />
+      <div className="absolute left-1/2 top-20 h-40 w-40 -translate-x-1/2 rounded-full border border-cyan-200/40 bg-cyan-100/10 blur-3xl" />
 
-      {/* subtle background geometry */}
-      <g opacity="0.18">
-        <rect x="-10" y="-10" width="120" height="120" fill="url(#hv-bg)" />
-        <g transform="translate(10,6) rotate(-8)">
-          <rect x="0" y="0" width="40" height="40" rx="6" fill="none" stroke="hsl(var(--primary))" strokeOpacity="0.04" />
-        </g>
-        <g transform="translate(50,20) rotate(18)">
-          <rect x="0" y="0" width="28" height="28" rx="4" fill="none" stroke="hsl(var(--secondary))" strokeOpacity="0.03" />
-        </g>
-      </g>
+      <div className="absolute inset-6 rounded-[2rem] bg-white/90 ring-1 ring-border/30 shadow-inner shadow-slate-200/40 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(56,189,248,0.14),transparent_20%),radial-gradient(circle_at_bottom_right,rgba(16,185,129,0.16),transparent_30%)]" />
 
-      {/* connecting lines */}
-      <g stroke="url(#hv-line)" strokeWidth="0.28" opacity="0.7">
-        {edges.map(([a, b], i) => (
-          <line key={i} x1={nodes[a].x} y1={nodes[a].y} x2={nodes[b].x} y2={nodes[b].y} strokeLinecap="round" />
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full">
+          <defs>
+            <linearGradient id="hero-network-line" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="hsl(var(--accent))" stopOpacity="0.95" />
+              <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.8" />
+            </linearGradient>
+            <radialGradient id="hero-network-node" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="hsl(var(--accent))" stopOpacity="1" />
+              <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.16" />
+            </radialGradient>
+          </defs>
+
+          <g stroke="url(#hero-network-line)" strokeWidth="0.4" strokeLinecap="round" opacity="0.75">
+            {edges.map(([from, to], index) => {
+              const source = nodes.find((node) => node.id === from);
+              const target = nodes.find((node) => node.id === to);
+              return source && target ? (
+                <line
+                  key={index}
+                  x1={source.x}
+                  y1={source.y}
+                  x2={target.x}
+                  y2={target.y}
+                />
+              ) : null;
+            })}
+          </g>
+
+          <g stroke="hsl(var(--accent))" strokeOpacity="0.14" strokeWidth="0.18" fill="none">
+            <path d="M12 28 C26 22, 38 20, 52 26" />
+            <path d="M30 64 C44 58, 60 66, 78 72" />
+          </g>
+        </svg>
+
+        {nodes.map((node, index) => (
+          <motion.div
+            key={node.id}
+            initial={{ scale: 0.96, opacity: 0.92 }}
+            animate={{ scale: [0.98, 1, 0.98], opacity: [0.92, 1, 0.92] }}
+            transition={{ duration: 4.5, repeat: Infinity, repeatType: "mirror", ease: "easeInOut", delay: index * 0.12 }}
+            className="absolute rounded-full"
+            style={{
+              top: `${node.y}%`,
+              left: `${node.x}%`,
+              width: `${node.size}px`,
+              height: `${node.size}px`,
+              marginLeft: `-${node.size / 2}px`,
+              marginTop: `-${node.size / 2}px`,
+              boxShadow: node.main
+                ? "0 0 34px rgba(20,184,166,0.22), 0 0 18px rgba(56,189,248,0.16)"
+                : "0 0 18px rgba(20,184,166,0.16)"
+            }}
+          >
+            <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(20,184,166,0.95),rgba(20,184,166,0.15))]" />
+            <div className="absolute inset-0 rounded-full border border-white/60" />
+          </motion.div>
         ))}
-      </g>
+      </div>
 
-      {/* subtle animated paths (very low opacity) to suggest flow */}
-      <g stroke="hsl(var(--primary))" strokeOpacity="0.06" strokeWidth="0.2" fill="none">
-        <path d="M12 24 C28 18, 44 16, 60 24" />
-        <path d="M22 60 C36 56, 52 62, 74 66" />
-      </g>
+      <motion.div
+        initial={{ y: -12, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.9, delay: 0.2, ease: "easeOut" }}
+        className="absolute -left-4 top-6 w-56 rounded-[1.75rem] border border-white/70 bg-white/90 p-4 shadow-lg shadow-primary/10 backdrop-blur-md"
+      >
+        <div className="text-[11px] font-semibold uppercase tracking-[0.24em] text-accent">Projects</div>
+        <div className="mt-3 text-2xl font-heading font-bold text-foreground">250+</div>
+      </motion.div>
 
-      {/* soft glow behind main nodes */}
-      <g fill="hsl(var(--primary))" opacity="0.12">
-        {nodes.filter((n) => n.main).map((n, i) => (
-          <circle key={i} cx={n.x} cy={n.y} r={6 + i} />
-        ))}
-      </g>
+      <motion.div
+        initial={{ y: -12, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.9, delay: 0.3, ease: "easeOut" }}
+        className="absolute right-6 top-20 w-52 rounded-[1.75rem] border border-white/70 bg-white/90 p-4 shadow-lg shadow-primary/10 backdrop-blur-md"
+      >
+        <div className="text-[11px] font-semibold uppercase tracking-[0.24em] text-accent">Response</div>
+        <div className="mt-3 text-2xl font-heading font-bold text-foreground">Fast</div>
+      </motion.div>
 
-      {/* nodes with subtle pulsing */}
-      <g>
-        {nodes.map((n, i) => (
-          <motion.g key={i} initial={{ scale: 0.95 }} animate={{ scale: [0.96, 1, 0.96] }} transition={{ duration: 3 + (i % 3), repeat: Infinity, ease: "easeInOut", delay: i * 0.15 }}>
-            <circle cx={n.x} cy={n.y} r={n.r + 0.6} fill="rgba(255,255,255,0.02)" />
-            <circle cx={n.x} cy={n.y} r={n.r} fill="url(#hv-node)" stroke="rgba(255,255,255,0.12)" strokeWidth="0.08" />
-            {n.main && (
-              <circle cx={n.x} cy={n.y} r={n.r * 1.7} fill="none" stroke="hsl(var(--primary))" strokeOpacity="0.18" strokeWidth="0.2" />
-            )}
-          </motion.g>
-        ))}
-      </g>
-
-      {/* tiny accent dots for texture */}
-      <g fill="hsl(var(--secondary))" opacity="0.18">
-        <circle cx="82" cy="28" r="0.6" />
-        <circle cx="28" cy="12" r="0.5" />
-        <circle cx="10" cy="82" r="0.5" />
-      </g>
-    </svg>
+      <motion.div
+        initial={{ y: 12, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.9, delay: 0.4, ease: "easeOut" }}
+        className="absolute left-8 bottom-10 w-64 rounded-[1.75rem] border border-white/70 bg-white/90 p-4 shadow-lg shadow-primary/10 backdrop-blur-md"
+      >
+        <div className="text-[11px] font-semibold uppercase tracking-[0.24em] text-accent">Monitoring and Support</div>
+        <div className="mt-3 text-sm leading-relaxed text-foreground">Ready for your next project</div>
+      </motion.div>
+    </div>
   );
 }
