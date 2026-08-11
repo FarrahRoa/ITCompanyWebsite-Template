@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import { ArrowRight, Calendar, Play, Sparkles } from "lucide-react";
 import MagneticButton from "./MagneticButton";
-import HeroVisual from "./visuals/HeroVisual";
+import WirelessSurveyVisual from "./visuals/WirelessSurveyVisual";
 import { hero, brand } from "@/data";
 
 export default function Hero() {
@@ -144,10 +144,10 @@ export default function Hero() {
           transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
           className="relative [perspective:1200px]"
         >
-          <motion.div style={{ rotateX: rotX, rotateY: rotY }} className="relative [transform-style:preserve-3d]">
-            <div className="relative rounded-3xl overflow-hidden glass p-2 shadow-2xl shadow-primary/20">
-              <div className="rounded-2xl aspect-[4/3] w-full">
-                <HeroVisual />
+          <motion.div style={{ rotateX: rotX, rotateY: rotY }} className="relative [transform-style:preserve-3d] flex justify-center">
+            <div className="relative w-full max-w-[620px] rounded-3xl overflow-hidden glass p-2 shadow-2xl shadow-primary/20">
+              <div className="rounded-2xl aspect-[11/10] w-full">
+                <WirelessSurveyVisual />
               </div>
               <div className="absolute inset-2 rounded-2xl ring-1 ring-inset ring-white/10 pointer-events-none" />
             </div>

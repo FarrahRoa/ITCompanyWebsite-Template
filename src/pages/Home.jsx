@@ -2,6 +2,9 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Services from "@/components/Services";
 import About from "@/components/About";
+import TrackRecord from "@/components/TrackRecord";
+import HowItWorks from "@/components/HowItWorks";
+import Coverage from "@/components/Coverage";
 import Portfolio from "@/components/Portfolio";
 import LatestNews from "@/components/LatestNews";
 import AISection from "@/components/AISection";
@@ -25,6 +28,9 @@ export default function Home() {
         <Hero />
         <Services />
         <About />
+        <TrackRecord />
+        <HowItWorks />
+        <Coverage />
         <ClientsShowcase />
         <Portfolio />
         <LatestNews />

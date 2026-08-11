@@ -67,17 +67,52 @@ export default function Contact() {
               </div>
             )}
 
-            {/* Map placeholder */}
+            {/* Location visual */}
             <div className="mt-8 relative h-56 rounded-2xl overflow-hidden glass">
-              <div className="absolute inset-0 grid-pattern opacity-60" />
+              <div className="absolute inset-0 grid-pattern opacity-50" />
               <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10" />
-              <div className="absolute inset-0 flex items-center justify-center">
+
+              <div className="absolute inset-0">
+                <svg viewBox="0 0 300 160" aria-hidden="true" className="h-full w-full">
+                  <defs>
+                    <linearGradient id="contactLocationLine" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stopColor="#14b8a6" stopOpacity="0.35" />
+                      <stop offset="100%" stopColor="#0f766e" stopOpacity="0.15" />
+                    </linearGradient>
+                  </defs>
+                  <path d="M36 22 C72 18, 82 46, 94 62 S150 82, 184 78 c22-3, 34-22, 48-14" fill="none" stroke="rgba(15,118,110,0.18)" strokeWidth="1.5" />
+                  <path d="M48 124 C84 122, 98 90, 122 74 S170 42, 210 48" fill="none" stroke="rgba(20,184,166,0.18)" strokeWidth="1.5" />
+                  <path d="M66 38 C94 44, 114 72, 144 62 S186 36, 232 54" fill="none" stroke="rgba(15,118,110,0.12)" strokeWidth="1.5" />
+                  <circle cx="150" cy="88" r="28" fill="rgba(20,184,166,0.12)" />
+                  <circle cx="150" cy="88" r="12" fill="#14b8a6" />
+                  <path d="M150 66 L150 98" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" />
+                  <path d="M142 84 L158 84" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" />
+                  <path d="M152 64 C152 54, 128 52, 128 72 C128 90, 150 106, 150 118 C150 106, 172 90, 172 72 C172 52, 148 54, 148 64" fill="none" stroke="#ffffff" strokeWidth="2" />
+                  <line x1="20" y1="20" x2="280" y2="20" stroke="rgba(75,103,133,0.08)" strokeWidth="1" />
+                  <line x1="20" y1="60" x2="280" y2="60" stroke="rgba(75,103,133,0.08)" strokeWidth="1" />
+                  <line x1="20" y1="100" x2="280" y2="100" stroke="rgba(75,103,133,0.08)" strokeWidth="1" />
+                  <line x1="20" y1="140" x2="280" y2="140" stroke="rgba(75,103,133,0.08)" strokeWidth="1" />
+                  <line x1="40" y1="10" x2="40" y2="150" stroke="rgba(75,103,133,0.08)" strokeWidth="1" />
+                  <line x1="90" y1="10" x2="90" y2="150" stroke="rgba(75,103,133,0.08)" strokeWidth="1" />
+                  <line x1="140" y1="10" x2="140" y2="150" stroke="rgba(75,103,133,0.08)" strokeWidth="1" />
+                  <line x1="190" y1="10" x2="190" y2="150" stroke="rgba(75,103,133,0.08)" strokeWidth="1" />
+                  <line x1="240" y1="10" x2="240" y2="150" stroke="rgba(75,103,133,0.08)" strokeWidth="1" />
+                </svg>
+              </div>
+
+              <div className="relative z-10 flex h-full items-center justify-center px-6">
                 <div className="text-center">
-                  <span className="relative grid place-items-center w-14 h-14 mx-auto rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 animate-float">
-                    <MapPin className="w-6 h-6" />
-                    <span className="absolute inset-0 rounded-full bg-primary/40 animate-ping" />
-                  </span>
-                  <p className="mt-3 font-mono-label text-muted-foreground">{contact.mapLabel}</p>
+                  <div className="text-[10px] uppercase tracking-[0.32em] text-muted-foreground mb-3">Head Office</div>
+                  <div className="relative mx-auto mb-4 w-20 h-20 rounded-full bg-white/90 shadow-[0_22px_50px_rgba(15,23,42,0.12)]">
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/10 via-transparent to-secondary/10" />
+                    <div className="absolute inset-0 grid place-items-center">
+                      <span className="relative inline-flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-primary to-secondary text-white shadow-lg shadow-primary/25">
+                        <MapPin className="w-6 h-6" />
+                      </span>
+                    </div>
+                  </div>
+                  <div className="text-lg font-semibold text-foreground tracking-[0.02em]">WALLINGTON</div>
+                  <div className="text-sm uppercase tracking-[0.32em] text-muted-foreground">ENGLAND</div>
                 </div>
               </div>
             </div>
