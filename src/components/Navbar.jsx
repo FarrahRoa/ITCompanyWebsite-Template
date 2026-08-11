@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Hexagon, LogIn } from "lucide-react";
+import { Menu, X, LogIn } from "lucide-react";
 import MagneticButton from "./MagneticButton";
-import { nav, brand } from "@/data";
+import { nav } from "@/data";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -137,16 +137,10 @@ export default function Navbar() {
 }
 
 function Logo() {
-  const [first, ...rest] = brand.name.split(" ");
   return (
-    <a href="#home" className="flex items-center gap-2 group pr-2">
-      <span className="relative grid place-items-center w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-secondary text-primary-foreground shadow-lg shadow-primary/30 group-hover:rotate-12 transition-transform">
-        <Hexagon className="w-5 h-5" />
-      </span>
-      <span className="font-heading font-bold text-lg tracking-tight">
-        {first}
-        {rest.length > 0 && <span className="text-gradient">{" "}{rest.join(" ")}</span>}
-      </span>
+    <a href="#home" className="flex items-center gap-3 group pr-2">
+      <img src="/Scylla_Logo_Color.png" alt="Scylla logo" className="h-11 w-auto object-contain" />
+      <span className="font-heading font-semibold text-xl tracking-tight text-foreground">Scylla</span>
     </a>
   );
 }

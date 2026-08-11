@@ -39,13 +39,7 @@ export default function Footer() {
           {/* brand + newsletter */}
           <div className="lg:col-span-4">
             <div className="flex items-center gap-2 mb-4">
-              <span className="grid place-items-center w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-secondary text-white shadow-lg shadow-primary/30">
-                <Hexagon className="w-5 h-5" />
-              </span>
-              <span className="font-heading font-bold text-lg text-white">
-                {first}
-                {rest.length > 0 && <span className="text-gradient">{" "}{rest.join(" ")}</span>}
-              </span>
+              <img src="/ScyllaLogo_Final.png" alt="Scylla" className="h-10 w-auto object-contain" />
             </div>
             <p className="text-sm text-slate-400 leading-relaxed max-w-sm">{footer.description}</p>
 
