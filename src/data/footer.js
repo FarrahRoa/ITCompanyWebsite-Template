@@ -1,4 +1,4 @@
-import { Twitter, Github, Linkedin, Youtube, Facebook } from "lucide-react";
+import { Twitter, Github, Linkedin, Instagram, Facebook } from "lucide-react";
 
 // ===============================
 // FOOTER CONTENT
