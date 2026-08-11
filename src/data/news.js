@@ -8,9 +8,9 @@ export const news = {
   ctaDescription:
     "Follow our latest projects, technology insights, and company updates on our social media channels.",
   socialLinks: [
-    { label: "Facebook", url: "https://www.facebook.com/", icon: "FB" },
-    { label: "Instagram", url: "https://www.instagram.com/", icon: "IG" },
-    { label: "LinkedIn", url: "https://www.linkedin.com/", icon: "in" },
+    { label: "Facebook", url: "https://www.facebook.com/share/18AG1grJh2/?mibextid=wwXIfr", icon: "FB" },
+    { label: "Instagram", url: "https://www.instagram.com/scylla.one?igsh=MmdlY29wbHpxaG4y", icon: "IG" },
+    { label: "LinkedIn", url: "https://www.linkedin.com/company/scylla1/", icon: "in" },
   ],
   items: [
     {
