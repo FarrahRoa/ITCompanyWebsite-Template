@@ -13,6 +13,15 @@ export default function ClientsShowcase() {
     "Cisco Meraki",
   ].map((name) => partners.items.find((partner) => partner.name === name)).filter(Boolean);
 
+  const partnerLogos = {
+    "Microsoft Partner": "/Microsoft-Partner.png",
+    "Google": "/Google-icon.avif",
+    "Bitdefender": "/Bitdefender_Logo.png",
+    "Ubiquiti": "/Ubiquiti_Logo.png",
+    "Marblism": "/marblism_logo.webp",
+    "Cisco Meraki": "/ciscomeraki_logo.webp",
+  };
+
   return (
     <section id="clients" className="relative py-16 lg:py-24">
       <div className="container mx-auto px-6 max-w-7xl">
@@ -44,7 +53,11 @@ export default function ClientsShowcase() {
                   className="h-full flex items-center gap-4 rounded-3xl border border-border/70 bg-background/70 p-4 shadow-sm shadow-primary/5"
                 >
                   <div className="grid h-14 w-14 place-items-center rounded-3xl bg-primary/10 text-primary font-semibold">
-                    {partner.name.split(" ").slice(0, 2).map((part) => part[0]).join("")}
+                    <img
+                      src={partnerLogos[partner.name]}
+                      alt={partner.name}
+                      className="h-9 w-9 object-contain"
+                    />
                   </div>
                   <div className="min-w-0">
                     <p className="font-heading text-sm font-semibold truncate">{partner.name}</p>
