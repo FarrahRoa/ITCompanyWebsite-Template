@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Hexagon, ArrowRight, Mail } from "lucide-react";
+import { ArrowRight, Mail } from "lucide-react";
 import Reveal from "./Reveal";
-import { footer, brand } from "@/data";
+import { footer } from "@/data/footer";
 
 // generic placeholder code shown faintly in the footer background
 const codeLines = [
@@ -16,6 +16,7 @@ export default function Footer() {
   const [email, setEmail] = useState("");
   const [done, setDone] = useState(false);
 
+  /** @param {React.FormEvent<HTMLFormElement>} e */
   const subscribe = (e) => {
     e.preventDefault();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
@@ -23,8 +24,6 @@ export default function Footer() {
     setEmail("");
     setTimeout(() => setDone(false), 3000);
   };
-
-  const [first, ...rest] = brand.name.split(" ");
 
   return (
     <footer className="relative overflow-hidden bg-slate-950 text-slate-300">
@@ -39,7 +38,7 @@ export default function Footer() {
           {/* brand + newsletter */}
           <div className="lg:col-span-4">
             <div className="flex items-center gap-2 mb-4">
-              <img src="/ScyllaLogo_Final.png" alt="Scylla" className="h-10 w-auto object-contain" />
+              <img src="/Scylla_Logo_Color.png" alt="Scylla" className="h-10 w-auto object-contain" />
             </div>
             <p className="text-sm text-slate-400 leading-relaxed max-w-sm">{footer.description}</p>
 
@@ -62,25 +61,32 @@ export default function Footer() {
             </form>
 
             <div className="flex gap-3 mt-6">
-              {footer.socials.map((Icon, i) => (
-                <a key={i} href="#" className="grid place-items-center w-9 h-9 rounded-full glass border border-white/10 text-slate-400 hover:text-white hover:border-primary/50 transition-colors" aria-label="Social link">
-                  <Icon className="w-4 h-4" />
+              {footer.socials.map((social, i) => (
+                <a
+                  key={i}
+                  href={social.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="grid place-items-center w-9 h-9 rounded-full glass border border-white/10 text-slate-400 hover:text-white hover:border-primary/50 transition-colors"
+                  aria-label={social.label}
+                >
+                  <social.icon className="w-4 h-4" />
                 </a>
               ))}
             </div>
           </div>
 
           {/* link columns */}
-          <div className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-4 gap-8">
+          <div className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-3 gap-8">
             {footer.columns.map((c) => (
               <div key={c.title}>
                 <h4 className="font-mono-label text-slate-500 mb-4">{c.title}</h4>
                 <ul className="space-y-2.5">
                   {c.links.map((l) => (
-                    <li key={l}>
-                      <a href="#" className="group inline-flex items-center gap-1 text-sm text-slate-400 hover:text-white transition-colors">
+                    <li key={l.label}>
+                      <a href={l.href} className="group inline-flex items-center gap-1 text-sm text-slate-400 hover:text-white transition-colors">
                         <span className="relative">
-                          {l}
+                          {l.label}
                           <span className="absolute left-0 -bottom-0.5 w-0 h-px bg-primary group-hover:w-full transition-all duration-300" />
                         </span>
                       </a>
@@ -89,6 +95,22 @@ export default function Footer() {
                 </ul>
               </div>
             ))}
+
+            <div>
+              <h4 className="font-mono-label text-slate-500 mb-4">{footer.contact.title}</h4>
+              <div className="space-y-2 text-sm text-slate-400">
+                {footer.contact.address.map((line) => (
+                  <div key={line}>{line}</div>
+                ))}
+                <div>
+                  <a href={`mailto:${footer.contact.email}`} className="hover:text-white transition-colors">{footer.contact.email}</a>
+                </div>
+                <div>
+                  <a href={`tel:${footer.contact.phone.replace(/\s+/g, "")}`} className="hover:text-white transition-colors">{footer.contact.phone}</a>
+                </div>
+                <div>{footer.contact.hours}</div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -96,8 +118,10 @@ export default function Footer() {
           <div className="mt-14 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
             <p>{footer.legal}</p>
             <div className="flex gap-6">
-              {footer.links.map((l) => (
-                <a key={l} href="#" className="hover:text-white transition-colors">{l}</a>
+              {footer.links.map((link) => (
+                <a key={link.label} href={link.href} className="hover:text-white transition-colors">
+                  {link.label}
+                </a>
               ))}
             </div>
           </div>

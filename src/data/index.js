@@ -17,5 +17,5 @@ export {
   pricing,
   blog,
   contact,
-  footer,
 } from "./company";
+export { footer } from "./footer";
