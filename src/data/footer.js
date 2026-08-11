@@ -1,4 +1,4 @@
-import { Twitter, Github, Linkedin, Youtube } from "lucide-react";
+import { Twitter, Github, Linkedin, Youtube, Facebook } from "lucide-react";
 
 // ===============================
 // FOOTER CONTENT
@@ -47,10 +47,10 @@ export const footer = {
   },
 
   socials: [
-    { label: "LinkedIn", href: "https://www.linkedin.com/company/scylla/", icon: Linkedin },
-    { label: "GitHub", href: "https://github.com/scylla", icon: Github },
-    { label: "Twitter", href: "https://twitter.com/scylla", icon: Twitter },
-    { label: "YouTube", href: "https://www.youtube.com/", icon: Youtube },
+    { label: "LinkedIn", href: "https://www.linkedin.com/company/scylla1/", icon: Linkedin },
+    { label: "Facebook", href: "https://www.facebook.com/share/18AG1grJh2/?mibextid=wwXIfr", icon: Facebook},
+    { label: "Instagram", href: "https://www.instagram.com/scylla.one?igsh=MmdlY29wbHpxaG4y", icon: Instagram }
+    
   ],
 
   legal: "© 2026 Scylla. All Rights Reserved.",
