@@ -3,11 +3,11 @@ export const partners = {
   title: "Technology",
   titleAccent: "partners",
   items: [
-    { name: "Microsoft Partner", category: "Cloud" },
-    { name: "Google", category: "Cloud" },
-    { name: "Bitdefender", category: "Security" },
-    { name: "Cisco Meraki", category: "Networking" },
-    { name: "Ubiquiti", category: "Networking" },
-    { name: "Marblism", category: "Partner" },
+    { name: "Microsoft Partner", category: "Cloud", logo: "/Microsoft-Partner.png" },
+    { name: "Google", category: "Cloud", logo: "/Google-icon.avif" },
+    { name: "Bitdefender", category: "Security", logo: "/Bitdefender_Logo.png" },
+    { name: "Cisco Meraki", category: "Networking", logo: "/ciscomeraki_logo.webp" },
+    { name: "Ubiquiti", category: "Networking", logo: "/Ubiquiti_Logo.png" },
+    { name: "Marblism", category: "Partner", logo: "/marblism_logo.webp" },
   ],
 };

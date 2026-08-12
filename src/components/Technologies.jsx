@@ -25,7 +25,19 @@ export default function Technologies() {
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 opacity-60" />
                 <div className="relative">
                   <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-primary/20 bg-background/70 text-lg font-semibold tracking-[0.25em] text-primary">
-                    {item.logo}
+                    {item.logo && item.logo.startsWith("/") ? (
+                      <img
+                        src={item.logo}
+                        alt={`${item.name} logo`}
+                        className="h-9 w-9 object-contain"
+                      />
+                    ) : (
+                      item.name
+                        .split(" ")
+                        .map((word) => word[0])
+                        .join("")
+                        .toUpperCase()
+                    )}
                   </div>
                   <h3 className="mt-5 font-heading text-xl font-semibold">{item.name}</h3>
                   <p className="mt-2 text-sm text-muted-foreground">{item.description}</p>

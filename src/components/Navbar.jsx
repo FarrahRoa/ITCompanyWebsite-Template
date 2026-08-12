@@ -23,12 +23,13 @@ export default function Navbar() {
     };
 
     const observer = new IntersectionObserver((entries) => {
-      // Find the entry with highest intersectionRatio and update active
+      // Find the entry with highest intersectionRatio
       let best = null;
       for (const entry of entries) {
         if (!best || entry.intersectionRatio > best.intersectionRatio) best = entry;
       }
-      if (best && best.isIntersecting) {
+      // Update active state if we found an intersecting entry, or use the best entry regardless
+      if (best) {
         const id = best.target.id ? `#${best.target.id}` : null;
         if (id) setActive(id);
       }
@@ -36,8 +37,30 @@ export default function Navbar() {
 
     elements.forEach((el) => observer.observe(el));
 
-    // fallback: update scrolled state on scroll
-    const onScroll = () => setScrolled(window.scrollY > 100);
+    // Scroll event handler to ensure active state is accurate on scroll
+    const onScroll = () => {
+      setScrolled(window.scrollY > 100);
+      
+      // Find which section is currently at the top of the viewport
+      let closestSection = "#home"; // Default to home
+      
+      // Look for the section that's closest to the top of the viewport
+      // Iterate backwards to find the last section that has started coming into view
+      for (let i = elements.length - 1; i >= 0; i--) {
+        const el = elements[i];
+        if (!el) continue;
+        const rect = el.getBoundingClientRect();
+        
+        // If section top is at or above ~140px (accounting for navbar height), it's the active section
+        if (rect.top <= 140) {
+          closestSection = `#${el.id}`;
+          break;
+        }
+      }
+      
+      setActive(closestSection);
+    };
+
     window.addEventListener("scroll", onScroll, { passive: true });
 
     return () => {
