@@ -3,64 +3,77 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, LogIn } from "lucide-react";
 import { nav } from "@/data";
 
+const VALID_SECTION_IDS = ["#home", "#about", "#services", "#contact"];
+const NAV_OFFSET = 160;
+
+function scrollToSection(id) {
+  const element = document.querySelector(id);
+
+  if (!element) {
+    console.warn(`Section ${id} was not found.`);
+    return;
+  }
+
+  element.scrollIntoView({ behavior: "smooth", block: "start" });
+
+  if (typeof window !== "undefined") {
+    window.history.replaceState(null, "", id);
+  }
+}
+
+function getActiveSection() {
+  if (typeof window === "undefined") return "#home";
+
+  if (window.scrollY <= 20) return "#home";
+
+  let selected = "#home";
+  let bestDistance = Number.POSITIVE_INFINITY;
+
+  VALID_SECTION_IDS.forEach((id) => {
+    const el = document.querySelector(id);
+    if (!el) return;
+
+    const rect = el.getBoundingClientRect();
+
+    if (rect.top <= NAV_OFFSET && rect.bottom > NAV_OFFSET) {
+      selected = id;
+      bestDistance = Number.NEGATIVE_INFINITY;
+      return;
+    }
+
+    const distance = Math.abs(rect.top - NAV_OFFSET);
+    if (distance < bestDistance) {
+      bestDistance = distance;
+      selected = id;
+    }
+  });
+
+  return selected;
+}
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState("#home");
+  const [active, setActive] = useState(() => getActiveSection());
 
   useEffect(() => {
-    // Set initial active state based on URL hash
-    const setActiveFromHash = () => {
-      const hash = window.location.hash || "#home";
-      setActive(hash);
+    const syncActive = () => {
+      const nextActive = getActiveSection();
+      setActive((current) => (current === nextActive ? current : nextActive));
     };
 
-    setActiveFromHash();
-
-    // Update active state when URL hash changes
-    window.addEventListener("hashchange", setActiveFromHash);
-
-    return () => {
-      window.removeEventListener("hashchange", setActiveFromHash);
-    };
-  }, []);
-
-  useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 100);
-
-      // Fallback: detect which section is in view based on scroll position
-      const sectionIds = nav.map((l) => l.href).filter(Boolean);
-      const elements = sectionIds.map((id) => document.querySelector(id)).filter(Boolean);
-
-      if (elements.length === 0) return;
-
-      // Find the section that's closest to the top of the viewport
-      let closestSection = "#home";
-      let closestDistance = Infinity;
-
-      for (const el of elements) {
-        if (!el) continue;
-        const rect = el.getBoundingClientRect();
-        const distance = Math.abs(rect.top - 140); // Account for navbar height
-
-        // Prefer sections that are above the viewport midpoint
-        if (rect.top <= 300 && distance < closestDistance) {
-          closestDistance = distance;
-          closestSection = `#${el.id}`;
-        }
-      }
-
-      // Only update if not already set by hash
-      if (!window.location.hash) {
-        setActive(closestSection);
-      }
+      syncActive();
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("hashchange", syncActive);
+    syncActive();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("hashchange", syncActive);
     };
   }, []);
 
@@ -70,37 +83,26 @@ export default function Navbar() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4"
+        className="fixed inset-x-0 top-0 z-[80] flex justify-center px-4"
       >
-        <AnimatePresence mode="wait">
-          {scrolled ? (
-            <motion.nav
-              key="glass"
-              initial={{ opacity: 0, y: -20, width: "100%" }}
-              animate={{ opacity: 1, y: 0, width: "auto" }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4 }}
-              className="glass mt-5 rounded-full px-5 py-2.5 shadow-xl shadow-primary/5 flex items-center gap-1 max-w-full"
-            >
-              <Logo />
-              <DesktopLinks active={active} />
-              <CTA />
-            </motion.nav>
-          ) : (
-            <motion.nav
-              key="ghost"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="mt-5 w-full max-w-7xl flex items-center justify-between px-6 py-3"
-            >
-              <Logo />
-              <DesktopLinks active={active} />
-              <CTA />
-            </motion.nav>
-          )}
-        </AnimatePresence>
+        <motion.nav
+          initial={{ opacity: 0, y: -20 }}
+          animate={{
+            opacity: 1,
+            y: 0,
+            width: scrolled ? "auto" : "100%",
+          }}
+          transition={{ duration: 0.4 }}
+          className={
+            scrolled
+              ? "glass mt-5 rounded-full px-5 py-2.5 shadow-xl shadow-primary/5 flex items-center gap-1 max-w-full"
+              : "mt-5 w-full max-w-7xl flex items-center justify-between px-6 py-3"
+          }
+        >
+          <Logo />
+          <DesktopLinks active={active} onSelect={setActive} onNavigate={scrollToSection} />
+          <CTA />
+        </motion.nav>
       </motion.header>
 
       {/* Mobile menu button */}
@@ -132,11 +134,8 @@ export default function Navbar() {
                   onClick={() => {
                     setOpen(false);
                     if (l.href && l.href.startsWith("#")) {
-                      const el = document.querySelector(l.href);
-                      if (el) {
-                        setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 80);
-                        history.replaceState(null, "", l.href);
-                      }
+                      setActive(l.href);
+                      scrollToSection(l.href);
                     }
                   }}
                   initial={{ opacity: 0, x: -20 }}
@@ -166,7 +165,7 @@ function Logo() {
   );
 }
 
-function DesktopLinks({ active }) {
+function DesktopLinks({ active, onSelect, onNavigate }) {
   return (
     <div className="hidden md:flex items-center gap-0.5 mx-2">
       {nav.map((l) => (
@@ -177,12 +176,8 @@ function DesktopLinks({ active }) {
           onClick={(e) => {
             if (l.href && l.href.startsWith("#")) {
               e.preventDefault();
-              const el = document.querySelector(l.href);
-              if (el) {
-                el.scrollIntoView({ behavior: "smooth", block: "start" });
-                // update hash without jumping
-                history.replaceState(null, "", l.href);
-              }
+              onSelect?.(l.href);
+              onNavigate?.(l.href);
             }
           }}
           className={`relative px-3.5 py-1.5 text-sm font-medium rounded-full transition-colors hover:text-primary ${

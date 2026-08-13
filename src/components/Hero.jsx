@@ -27,7 +27,7 @@ export default function Hero() {
   };
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center overflow-hidden pt-28 pb-16">
+    <section id="home" className="relative min-h-screen flex items-center overflow-hidden pt-28 pb-16 scroll-mt-28">
       {/* animated background */}
       <div className="absolute inset-0 -z-10 grid-pattern opacity-60" />
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background via-background to-background/50" />

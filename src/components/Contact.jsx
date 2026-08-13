@@ -34,7 +34,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative py-16 lg:py-24">
+    <section id="contact" className="relative py-16 lg:py-24 scroll-mt-28">
       <div className="container mx-auto px-6 max-w-7xl">
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Left: info + map */}

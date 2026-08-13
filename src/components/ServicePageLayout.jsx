@@ -22,7 +22,7 @@ export default function ServicePageLayout({
       <ScrollProgress />
       <CursorGlow />
       <Navbar />
-      <main>
+      <main className="pt-24 md:pt-28">
         <section className="relative overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-28">
           <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(47,128,209,0.12),transparent_45%)]" />
           <div className="container mx-auto max-w-7xl px-6">

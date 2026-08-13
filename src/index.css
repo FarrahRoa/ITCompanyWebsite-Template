@@ -118,6 +118,10 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  section[id] {
+    scroll-margin-top: 6rem;
+  }
+
   body {
     @apply bg-background text-foreground font-body antialiased;
     line-height: 1.6;

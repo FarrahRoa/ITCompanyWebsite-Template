@@ -5,7 +5,7 @@ import { services } from "@/data";
 
 export default function Services() {
   return (
-    <section id="services" className="relative py-16 lg:py-24">
+    <section id="services" className="relative py-16 lg:py-24 scroll-mt-28">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
       <div className="container mx-auto px-6 max-w-7xl">
         <Reveal className="max-w-3xl mb-14">
