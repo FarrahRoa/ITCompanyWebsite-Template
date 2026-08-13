@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, LogIn } from "lucide-react";
-import MagneticButton from "./MagneticButton";
 import { nav } from "@/data";
 
 export default function Navbar() {
@@ -206,13 +205,14 @@ function DesktopLinks({ active }) {
 
 function CTA() {
   return (
-    <MagneticButton
-      as="a"
-      href="/customer-login"
+    <a
+      href="https://login.scyllaselect.com/"
+      target="_blank"
+      rel="noopener noreferrer"
       className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold border border-primary/20 bg-background/80 text-foreground shadow-sm hover:bg-primary/10"
     >
       <LogIn className="w-4 h-4" />
       Customer Login
-    </MagneticButton>
+    </a>
   );
 }

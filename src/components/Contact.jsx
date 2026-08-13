@@ -111,8 +111,8 @@ export default function Contact() {
                       </span>
                     </div>
                   </div>
-                  <div className="text-lg font-semibold text-foreground tracking-[0.02em]">WALLINGTON</div>
-                  <div className="text-sm uppercase tracking-[0.32em] text-muted-foreground">ENGLAND</div>
+                  <div className="text-lg font-semibold text-foreground tracking-[0.02em]">TRINITY BUOY WHARF</div>
+                  <div className="text-sm uppercase tracking-[0.32em] text-muted-foreground">STUDIO M, 64 ORCHARD PLACE</div>
                 </div>
               </div>
             </div>

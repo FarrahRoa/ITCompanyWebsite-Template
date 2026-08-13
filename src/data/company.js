@@ -160,7 +160,7 @@ export const contact = {
   details: [
     { icon: Mail, label: "Email", value: "support@scylla.one", href: "mailto:company@example.com" },
     { icon: Phone, label: "Phone", value: "0203 504 5005", href: "tel:+10000000000" },
-    { icon: MapPin, label: "Location", value: "SBC HouseRestmor Way Wallington, England, SM6 7AH" },
+    { icon: MapPin, label: "Location", value: "Trinity Buoy Wharf, Studio M, 64 Orchard Place  " },
   ],
   socials: [
     { label: "LinkedIn", href: "https://www.linkedin.com" },
