@@ -9,62 +9,58 @@ export default function Navbar() {
   const [active, setActive] = useState("#home");
 
   useEffect(() => {
-    setScrolled(window.scrollY > 100);
-
-    // Use IntersectionObserver to reliably detect which section is in view
-    const sectionIds = nav.map((l) => l.href).filter(Boolean);
-    const elements = sectionIds.map((id) => document.querySelector(id)).filter(Boolean);
-
-    const observerOptions = {
-      root: null,
-      rootMargin: "-30% 0px -40% 0px",
-      threshold: 0.15,
+    // Set initial active state based on URL hash
+    const setActiveFromHash = () => {
+      const hash = window.location.hash || "#home";
+      setActive(hash);
     };
 
-    const observer = new IntersectionObserver((entries) => {
-      // Find the entry with highest intersectionRatio
-      let best = null;
-      for (const entry of entries) {
-        if (!best || entry.intersectionRatio > best.intersectionRatio) best = entry;
-      }
-      // Update active state if we found an intersecting entry, or use the best entry regardless
-      if (best) {
-        const id = best.target.id ? `#${best.target.id}` : null;
-        if (id) setActive(id);
-      }
-    }, observerOptions);
+    setActiveFromHash();
 
-    elements.forEach((el) => observer.observe(el));
-
-    // Scroll event handler to ensure active state is accurate on scroll
-    const onScroll = () => {
-      setScrolled(window.scrollY > 100);
-      
-      // Find which section is currently at the top of the viewport
-      let closestSection = "#home"; // Default to home
-      
-      // Look for the section that's closest to the top of the viewport
-      // Iterate backwards to find the last section that has started coming into view
-      for (let i = elements.length - 1; i >= 0; i--) {
-        const el = elements[i];
-        if (!el) continue;
-        const rect = el.getBoundingClientRect();
-        
-        // If section top is at or above ~140px (accounting for navbar height), it's the active section
-        if (rect.top <= 140) {
-          closestSection = `#${el.id}`;
-          break;
-        }
-      }
-      
-      setActive(closestSection);
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
+    // Update active state when URL hash changes
+    window.addEventListener("hashchange", setActiveFromHash);
 
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      observer.disconnect();
+      window.removeEventListener("hashchange", setActiveFromHash);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 100);
+
+      // Fallback: detect which section is in view based on scroll position
+      const sectionIds = nav.map((l) => l.href).filter(Boolean);
+      const elements = sectionIds.map((id) => document.querySelector(id)).filter(Boolean);
+
+      if (elements.length === 0) return;
+
+      // Find the section that's closest to the top of the viewport
+      let closestSection = "#home";
+      let closestDistance = Infinity;
+
+      for (const el of elements) {
+        if (!el) continue;
+        const rect = el.getBoundingClientRect();
+        const distance = Math.abs(rect.top - 140); // Account for navbar height
+
+        // Prefer sections that are above the viewport midpoint
+        if (rect.top <= 300 && distance < closestDistance) {
+          closestDistance = distance;
+          closestSection = `#${el.id}`;
+        }
+      }
+
+      // Only update if not already set by hash
+      if (!window.location.hash) {
+        setActive(closestSection);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -132,6 +128,7 @@ export default function Navbar() {
                 <motion.a
                   key={l.label}
                   href={l.href}
+                  aria-current={active === l.href ? "page" : undefined}
                   onClick={() => {
                     setOpen(false);
                     if (l.href && l.href.startsWith("#")) {
@@ -145,7 +142,9 @@ export default function Navbar() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.05 }}
-                  className="text-2xl font-heading font-semibold py-3 border-b border-border"
+                  className={`text-2xl font-heading font-semibold py-3 border-b border-border transition-colors ${
+                    active === l.href ? "text-primary" : "text-foreground"
+                  }`}
                 >
                   {l.label}
                 </motion.a>
@@ -174,6 +173,7 @@ function DesktopLinks({ active }) {
         <a
           key={l.label}
           href={l.href}
+          aria-current={active === l.href ? "page" : undefined}
           onClick={(e) => {
             if (l.href && l.href.startsWith("#")) {
               e.preventDefault();
